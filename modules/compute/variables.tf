@@ -16,6 +16,18 @@ variable "docker_name" {
   default     = "docker-swarm-vm"
 }
 
+variable "docker_manager_name" {
+  description = "Name of the Docker Swarm Manager VM"
+  type        = string
+  default     = "docker-swarm-manager-vm"
+}
+
+variable "docker_worker_name" {
+  description = "Name of the Docker Swarm Worker VM"
+  type        = string
+  default     = "docker-swarm-worker-vm"
+}
+
 variable "machine_type" {
   description = "Machine type for all VMs"
   type        = string
