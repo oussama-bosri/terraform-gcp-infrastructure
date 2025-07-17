@@ -57,3 +57,63 @@ resource "google_compute_instance" "docker_swarm_worker" {
 
   metadata_startup_script = file("${path.module}/../../scripts/install-docker-swarm-worker.sh")
 }
+
+resource "google_compute_firewall" "jenkins" {
+  name    = "allow-jenkins"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["8080"]
+  }
+
+  target_tags = ["jenkins"]
+  direction   = "INGRESS"
+  description = "Allow external access to Jenkins UI"
+  source_ranges = ["0.0.0.0/0"]
+}
+
+resource "google_compute_firewall" "jenkins_https" {
+  name    = "allow-jenkins-https"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  target_tags = ["jenkins"]
+  direction   = "INGRESS"
+  description = "Allow external HTTPS access to Jenkins"
+  source_ranges = ["0.0.0.0/0"]
+}
+
+resource "google_compute_firewall" "swarm_web" {
+  name    = "allow-swarm-web"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443", "8080"]
+  }
+
+  target_tags = ["docker-swarm-manager", "docker-swarm-worker"]
+  direction   = "INGRESS"
+  description = "Allow external access to Swarm web services"
+  source_ranges = ["0.0.0.0/0"]
+}
+
+resource "google_compute_firewall" "sonarqube" {
+  name    = "allow-sonarqube"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["9000"]
+  }
+
+  target_tags = ["jenkins"]
+  direction   = "INGRESS"
+  description = "Allow external access to SonarQube UI"
+  source_ranges = ["0.0.0.0/0"]
+}

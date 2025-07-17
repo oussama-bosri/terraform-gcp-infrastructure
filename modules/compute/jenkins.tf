@@ -23,5 +23,5 @@ resource "google_compute_instance" "jenkins" {
 
   tags = ["jenkins"]
 
-  metadata_startup_script = file("${path.module}/../../scripts/install-jenkins.sh")
+  metadata_startup_script = file("${path.module}/../../scripts/install-jenkins-https.sh")
 }

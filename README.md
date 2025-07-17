@@ -104,7 +104,14 @@ gcp-storage-terraform/
 *.tfvars
 crash.log
 *.backup
+*.json
+*.b64
 ```
+
+---
+
+## Security Warning
+**Important:** Never commit service account keys, credentials, or other secrets (such as `*.json`, `*.b64`, or files in `.ssh/`) to version control. Always keep these files secure and out of your repository. Use environment variables or secret managers for sensitive data.
 
 ---
 
